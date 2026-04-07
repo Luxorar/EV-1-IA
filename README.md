@@ -3,7 +3,7 @@ LUIS VILLALÓN, VICTOR ARAUS
 SECCIÓN 001D
 
 
-<img width="3000" height="3829" alt="image" src="https://github.com/user-attachments/assets/168a2dac-ac76-4385-a6c3-86a13b37aa39" />
+<img width="30" height="38" alt="image" src="https://github.com/user-attachments/assets/168a2dac-ac76-4385-a6c3-86a13b37aa39" />
 
 IL1.1 Formula prompts para modelos de lenguaje, ajustando su estructura y contenido según las características del requerimiento informacional del caso.
 
