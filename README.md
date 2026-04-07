@@ -2,6 +2,9 @@
 LUIS VILLALÓN, VICTOR ARAUS
 SECCIÓN 001D
 
+
+<img width="3000" height="3829" alt="image" src="https://github.com/user-attachments/assets/168a2dac-ac76-4385-a6c3-86a13b37aa39" />
+
 IL1.1 Formula prompts para modelos de lenguaje, ajustando su estructura y contenido según las características del requerimiento informacional del caso.
 
 Nombre y breve descripción: Unimarc es una empresa de comercio de productos alimenticios como mercadería y otros productos para el hogar
