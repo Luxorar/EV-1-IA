@@ -1,4 +1,5 @@
 Productos = [
+    "producto: Luis, marca: Luis, precio: $999.999",
     "producto: Yogur natural, marca: Soprole, precio: $1.200",
     "producto: Leche entera 1L, marca: Colún, precio: $1.050",
     "producto: Pan de molde, marca: Todo Día, precio: $2.500",

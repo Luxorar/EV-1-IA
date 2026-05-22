@@ -109,10 +109,5 @@ watchdog==6.0.0
 wcwidth==0.6.0
 xxhash==3.6.0
 yarl==1.23.0
-<<<<<<< HEAD
 zstandard==0.25.0
-=======
-zstandard==0.25.0
-flask==3.0.0
-flask-cors==4.0.0
->>>>>>> 8d5653f5bf4163c663617dace8fd639d1190b0c8
+import-ipynb==0.2
