@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 app.py — Página principal de UNIMARC.
 
@@ -58,7 +57,6 @@ for i, (cat, items) in enumerate(sorted(cats.items())):
         """, unsafe_allow_html=True)
 
 st.page_link("pages/01_Productos.py", label="Ver todos los productos")
-=======
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import os
@@ -109,5 +107,4 @@ def chat():
     return jsonify({'response': respuesta})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5000)
->>>>>>> 8d5653f5bf4163c663617dace8fd639d1190b0c8
+    app.run(debug=True, host='0.0.0.0', port=8080)

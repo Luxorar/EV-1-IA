@@ -111,3 +111,5 @@ xxhash==3.6.0
 yarl==1.23.0
 zstandard==0.25.0
 import-ipynb==0.2
+flask
+flask-cors
