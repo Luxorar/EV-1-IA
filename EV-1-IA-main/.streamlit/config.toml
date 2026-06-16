@@ -1,0 +1,15 @@
+[server]
+enableXsrfProtection = true
+enableCORS = false
+maxUploadSize = 2
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+serverAddress = "127.0.0.1"
+
+[theme]
+base = "light"
+
+[global]
+developmentMode = false
