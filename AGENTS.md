@@ -10,10 +10,18 @@
 
 ## Repo state
 - **No tests, no linter, no typechecker** — zero config for any
-- **Broken Docker CMD:** `Dockerfile` line 23 runs `python Unimarc.py` (file doesn't exist)
 - `.env` committed with live secrets (`GITHUB_TOKEN`, `LANGSMITH_API_KEY`) — rotate them
 - `.gitignore` covers `.venv`, `__pycache__`, `.env`
 - Python 3.11 (from `__pycache__/`), venv at `.venv/`
+
+## Production deployment (20-100 concurrent users)
+- **Nginx reverse proxy** (`nginx.conf`) — balancea con `ip_hash` para sticky sessions, soporta WebSocket
+- **Escalado horizontal** con Docker Compose: `docker compose up --scale ev1ia=5 -d`
+- **Healthcheck** en Dockerfile (HTTP GET a `/` cada 30s)
+- **Config Streamlit** en `.streamlit/config.toml`:
+  - `maxMessageSize = 200`, `enableCORS = false`, `enableXsrfProtection = false`
+- **Entrada:** Nginx en puerto `:80` (público) → upstream `ev1ia:8080`
+- **Límite real:** ~10 usuarios por contenedor Streamlit. Con `--scale ev1ia=10` llegas a ~100
 
 ## Architecture
 - `main.py` — Streamlit entry, `st.navigation()` routes to 5 pages in `pages/`
