@@ -1,8 +1,20 @@
 services:
   ev1ia:
-    image: ev1ia
     build:
       context: .
       dockerfile: ./Dockerfile
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
     ports:
-      - "8080:8080"
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - ev1ia
+    restart: unless-stopped

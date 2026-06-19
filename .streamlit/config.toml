@@ -1,0 +1,14 @@
+[server]
+maxMessageSize = 200
+enableCORS = false
+enableXsrfProtection = false
+maxUploadSize = 200
+
+[global]
+developmentMode = false
+
+[runner]
+fastReruns = true
+
+[browser]
+gatherUsageStats = false
