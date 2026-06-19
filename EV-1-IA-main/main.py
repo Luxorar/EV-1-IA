@@ -16,11 +16,15 @@ load_dotenv()
 st.set_page_config(page_title="UNIMARC — El Supermercado de Todos", layout="wide")
 
 import utils
-from security import log_event, get_client_ip
+from security import log_event, get_client_ip, escape_html, login_limiter
 
 # ── Autenticación ──────────────────────────────────────────────────
-AUTH_USER = os.getenv("AUTH_USER", "admin")
-AUTH_PASS = os.getenv("AUTH_PASS", "unimarc2024")
+AUTH_USER = os.getenv("AUTH_USER")
+AUTH_PASS = os.getenv("AUTH_PASS")
+if not AUTH_USER or not AUTH_PASS:
+    st.error("Error de configuración: credenciales de autenticación no configuradas. "
+             "Define AUTH_USER y AUTH_PASS en el archivo .env")
+    st.stop()
 SESSION_TIMEOUT = 1800  # 30 minutos
 
 def check_auth():
@@ -56,6 +60,12 @@ def check_auth():
                                                    type="primary")
 
             if submitted:
+                login_ip = get_client_ip()
+                if not login_limiter.is_allowed(login_ip):
+                    log_event("LOGIN_RATE_LIMIT", level="warning",
+                              session_id=login_ip)
+                    st.error("Demasiados intentos de inicio de sesión. Espera un minuto.")
+                    st.stop()
                 if username == AUTH_USER and password == AUTH_PASS:
                     st.session_state.auth_user = username
                     st.session_state.auth_time = time.time()
@@ -65,7 +75,7 @@ def check_auth():
                 else:
                     log_event("LOGIN_FAILED", level="warning",
                               session_id=get_client_ip(),
-                              detail=f"user={username}")
+                              detail=f"user={escape_html(username)}")
                     st.error("Usuario o contraseña incorrectos.")
 
             st.markdown("""
@@ -94,6 +104,21 @@ with st.sidebar:
             st.session_state.auth_time = None
             st.rerun()
 
+    # Insertar presentación de la mascota institucional en el Sidebar
+    st.markdown("""
+    <div class="mascot-container">
+        <div class="uni-mascot">
+            <div class="uni-face"></div>
+        </div>
+        <div style="text-align: center; margin-top: 0.75rem;">
+            <strong style="color: #E31837; font-size: 1.1rem;">¡Hola, soy Uni!</strong>
+            <p style="color: #6c757d; font-size: 0.85rem; margin: 0.2rem 0 0 0;">
+                Tu asistente Unimarc 2026. Listo para ayudarte a ahorrar.
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("---")
 
     # Navegación
@@ -120,13 +145,15 @@ with st.sidebar:
     )
     st.session_state.radio_station = estacion
     url = utils.ESTACIONES[estacion]
+    url_safe = escape_html(url)
+    label_safe = escape_html(estacion)
     audio_html = f"""
     <div class="sidebar-radio">
         <audio controls autoplay>
-            <source src="{url}" type="audio/aac">
-            <source src="{url}" type="audio/mpeg">
+            <source src="{url_safe}" type="audio/aac">
+            <source src="{url_safe}" type="audio/mpeg">
         </audio>
-        <div class="sidebar-radio-label">{estacion}</div>
+        <div class="sidebar-radio-label">{label_safe}</div>
     </div>
     """
     st.markdown(audio_html, unsafe_allow_html=True)

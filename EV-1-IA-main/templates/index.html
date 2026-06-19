@@ -36,14 +36,20 @@
             </ul>
         </section>
 
-        <section id="spotify">
-            <h2>Música Ambiental</h2>
-            <p>Disfruta de música de fondo mientras navegas.</p>
-            <div class="music-controls">
-                <button id="play-music">Reproducir Música</button>
-                <button id="change-music">Cambiar Playlist</button>
+        <section id="radio">
+            <h2>Radio UNIMARC</h2>
+            <p>Disfruta de las radios chilenas en vivo mientras navegas.</p>
+            <div class="radio-controls">
+                <select id="radio-select">
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/FMDOSAAC_SC">FM Dos — Música variada</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/CONCIERTOAAC_SC">Radio Concierto — Pop &amp; Rock</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/CORAZONAAC_SC">Radio Corazón — Romántica</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CHILEAAC_SC">Los 40 Chile — Éxitos</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/PUDAHUELAAC_SC">Radio Pudahuel — Clásicos</option>
+                </select>
+                <button id="play-radio">▶ Reproducir</button>
             </div>
-            <iframe id="spotify-player" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd" width="300" height="152" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="display:none;"></iframe>
+            <audio id="radio-player" controls style="width:100%;margin-top:1rem;display:none;"></audio>
         </section>
     </div>
 

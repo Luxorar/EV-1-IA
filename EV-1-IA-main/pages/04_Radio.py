@@ -8,6 +8,7 @@ para que suene en todas las páginas.
 
 import streamlit as st
 import utils
+from security import escape_html
 
 utils.inject_css()
 
@@ -19,7 +20,7 @@ st.markdown(f"""
     <div class="radio-waves">
         <span></span><span></span><span></span><span></span><span></span>
     </div>
-    <h2>{estacion_actual}</h2>
+    <h2>{escape_html(estacion_actual)}</h2>
     <p class="status">La música se reproduce desde la barra lateral</p>
 </div>
 """, unsafe_allow_html=True)

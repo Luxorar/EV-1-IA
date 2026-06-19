@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatWindow = document.getElementById('chat-window');
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    const playMusicBtn = document.getElementById('play-music');
-    const changeMusicBtn = document.getElementById('change-music');
-    const spotifyPlayer = document.getElementById('spotify-player');
 
     let sessionId = 'user_' + Date.now();
 
@@ -47,22 +44,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Música
-    let playlists = [
-        'https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd', // Ambiente
-        'https://open.spotify.com/embed/playlist/37i9dQZF1DX4PP3DA4J0N8', // Jazz
-        'https://open.spotify.com/embed/playlist/37i9dQZF1DX4E3UdUs7fUx'  // Clásica
-    ];
-    let currentPlaylist = 0;
+    // Radio en vivo (Streamtheworld)
+    const radioSelect = document.getElementById('radio-select');
+    const playRadioBtn = document.getElementById('play-radio');
+    const radioPlayer = document.getElementById('radio-player');
+    let isPlaying = false;
 
-    playMusicBtn.addEventListener('click', function() {
-        spotifyPlayer.style.display = 'block';
-        playMusicBtn.textContent = 'Pausar Música';
-        // Nota: El iframe maneja autoplay, pero puede requerir interacción del usuario
+    playRadioBtn.addEventListener('click', function() {
+        if (!isPlaying) {
+            radioPlayer.src = radioSelect.value;
+            radioPlayer.style.display = 'block';
+            radioPlayer.play();
+            playRadioBtn.textContent = '⏸ Detener';
+            isPlaying = true;
+        } else {
+            radioPlayer.pause();
+            playRadioBtn.textContent = '▶ Reproducir';
+            isPlaying = false;
+        }
     });
 
-    changeMusicBtn.addEventListener('click', function() {
-        currentPlaylist = (currentPlaylist + 1) % playlists.length;
-        spotifyPlayer.src = playlists[currentPlaylist];
+    radioSelect.addEventListener('change', function() {
+        if (isPlaying) {
+            radioPlayer.src = radioSelect.value;
+            radioPlayer.play();
+        }
     });
 });
