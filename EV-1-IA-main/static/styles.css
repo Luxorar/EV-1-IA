@@ -1,7 +1,16 @@
 /* ============================================================
-   UNIMARC — Design System
+   UNIMARC 2026 — SISTEMA DE DISEÑO AMPLIADO
    Rojo corporativo: #E31837
    ============================================================ */
+
+:root {
+    --rojo-unimarc: #E31837;
+    --rojo-hover: #b81027;
+    --blanco: #ffffff;
+    --fondo-gris: #f8f9fa;
+    --texto-oscuro: #212529;
+    --borde-tarjeta: rgba(227, 24, 55, 0.08);
+}
 
 /* ── Animaciones ── */
 @keyframes fadeIn {
@@ -27,6 +36,14 @@
 @keyframes spin {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
+}
+@keyframes floatMascot {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+@keyframes blinkEyes {
+    0%, 95%, 100% { transform: scaleY(1); }
+    97% { transform: scaleY(0.1); }
 }
 
 /* ── Base ── */
@@ -213,7 +230,9 @@ section[data-testid="stSidebar"] > div {
     gap: 1.2rem;
     margin: 1rem 0;
 }
+/* --- Rediseño de Tarjetas de Producto --- */
 .product-card-wrapper {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
     animation: fadeIn 0.5s ease forwards;
     opacity: 0;
 }
@@ -229,14 +248,17 @@ section[data-testid="stSidebar"] > div {
 .product-card-wrapper:nth-child(10) { animation-delay: 0.5s; }
 .product-card-wrapper:nth-child(11) { animation-delay: 0.55s; }
 .product-card-wrapper:nth-child(12) { animation-delay: 0.6s; }
+.product-card-wrapper:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(223, 24, 55, 0.15);
+}
 
 /* ── Product Card ── */
 .product-card {
-    background: white;
-    border: none;
+    border: 1px solid var(--borde-tarjeta);
     border-radius: 16px;
+    background: var(--blanco);
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -246,13 +268,13 @@ section[data-testid="stSidebar"] > div {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 4px;
-    background: #E31837;
+    background: var(--rojo-unimarc);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 .product-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 35px rgba(227, 24, 55, 0.12);
+    box-shadow: 0 12px 24px rgba(227, 24, 55, 0.15);
 }
 .product-card:hover::before {
     opacity: 1;
@@ -260,7 +282,7 @@ section[data-testid="stSidebar"] > div {
 .product-card .product-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #E31837, #ff6b6b);
+    background: linear-gradient(135deg, var(--rojo-unimarc), #ff6b6b);
     color: white;
     display: flex;
     align-items: center;
@@ -273,7 +295,7 @@ section[data-testid="stSidebar"] > div {
     margin: 0 0 0.2rem;
     font-size: 1rem;
     font-weight: 700;
-    color: #222;
+    color: var(--texto-oscuro);
 }
 .product-card .brand {
     color: #888;
@@ -281,13 +303,13 @@ section[data-testid="stSidebar"] > div {
     margin-bottom: 0.6rem;
 }
 .product-card .price {
-    color: #E31837;
+    color: var(--rojo-unimarc);
     font-size: 1.4rem;
     font-weight: 800;
     margin: 0.3rem 0;
 }
 .product-card .category-badge {
-    background: #f5f5f5;
+    background: var(--fondo-gris);
     padding: 0.2rem 0.7rem;
     border-radius: 20px;
     font-size: 0.72rem;
@@ -712,4 +734,202 @@ div[data-testid="stChatInput"] button:hover {
     .cat-grid { grid-template-columns: 1fr; }
     .product-card { padding: 1rem; }
     .offer-card { padding: 1.2rem; }
+}
+
+/* --- El Personaje: "Uni" (Mascota Digital 2026) --- */
+.mascot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f6 100%);
+    border: 2px solid var(--rojo-unimarc);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.uni-mascot {
+    width: 70px;
+    height: 70px;
+    background: var(--rojo-unimarc);
+    border-radius: 18px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(227, 24, 55, 0.3);
+    animation: floatMascot 3s ease-in-out infinite;
+}
+
+/* Pantalla LED del rostro de Uni */
+.uni-face {
+    width: 52px;
+    height: 42px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+/* Ojos LED digitales */
+.uni-face::before, .uni-face::after {
+    content: '';
+    width: 8px;
+    height: 12px;
+    background: #00ffcc;
+    border-radius: 4px;
+    animation: blinkEyes 4s infinite;
+}
+
+/* Rueditas del carrito */
+.uni-mascot::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 50px;
+    height: 10px;
+    background: radial-gradient(circle, #333 40%, transparent 50%);
+    background-size: 15px 10px;
+    background-repeat: space;
+}
+
+/* --- Estilo de Burbujas del Chat mejoradas --- */
+.chat-msg-bot {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.bot-avatar-container {
+    flex-shrink: 0;
+}
+
+.chat-bubble {
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Clases para Flask template (index.html + script.js)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Chat ── */
+#chat-window {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: #fafafa;
+    border-radius: 16px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.message.bot, .message.user {
+    padding: 12px 18px;
+    border-radius: 20px;
+    max-width: 72%;
+    animation: fadeIn 0.3s ease;
+    word-wrap: break-word;
+    font-size: 0.93rem;
+    line-height: 1.55;
+}
+.message.bot {
+    background: white;
+    color: #333;
+    border-radius: 20px 20px 20px 4px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    border: 1px solid #f0f0f0;
+    align-self: flex-start;
+}
+.message.user {
+    background: #E31837;
+    color: white;
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: 0 3px 12px rgba(227,24,55,0.2);
+    align-self: flex-end;
+    margin-left: auto;
+}
+.input-area {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 800px;
+    margin: 0.5rem auto;
+}
+.input-area input {
+    flex: 1;
+    border: 2px solid #e0e0e0;
+    border-radius: 24px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.93rem;
+    outline: none;
+    transition: border-color 0.25s ease;
+}
+.input-area input:focus {
+    border-color: #E31837;
+    box-shadow: 0 0 0 3px rgba(227,24,55,0.15);
+}
+.input-area button {
+    background: #E31837;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.input-area button:hover {
+    background: #c41230;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(227,24,55,0.3);
+}
+
+/* ── Radio ── */
+.radio-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    max-width: 500px;
+    margin: 0.5rem auto;
+    flex-wrap: wrap;
+}
+.radio-controls select {
+    flex: 1;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    outline: none;
+    background: white;
+    transition: border-color 0.25s ease;
+}
+.radio-controls select:focus {
+    border-color: #E31837;
+}
+.radio-controls button {
+    background: #E31837;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+.radio-controls button:hover {
+    background: #c41230;
+    transform: translateY(-1px);
 }

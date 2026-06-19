@@ -3,11 +3,11 @@ flask_app.py — Servidor Flask independiente para UNIMARC.
 
 Ejecutar con: python flask_app.py
 Sirve el chat vía API REST en http://localhost:5000
+Usa el motor RAG real (FAISS + GPT-4o-mini) desde chat_engine.py.
 """
 
 import os
 import re
-import html
 import time
 from collections import defaultdict
 
@@ -15,24 +15,29 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from Doc_Unimarc import Productos
-
 load_dotenv()
+
+from chat_engine import consultar as rag_consultar
 
 app = Flask(__name__)
 
 # ── CORS Restrictivo ───────────────────────────────────────────────
 CORS(app, resources={
     r"/chat": {
-        "origins": ["http://localhost:8501", "http://127.0.0.1:8501"],
+        "origins": [
+            "http://localhost:5000",
+            "http://127.0.0.1:5000",
+            "http://localhost:8501",
+            "http://127.0.0.1:8501",
+        ],
         "methods": ["POST"],
         "allow_headers": ["Content-Type"],
     }
 })
 
 # ── Autenticación HTTP Basic ───────────────────────────────────────
-AUTH_USER = os.getenv("AUTH_USER", "admin")
-AUTH_PASS = os.getenv("AUTH_PASS", "unimarc2024")
+AUTH_USER = os.getenv("AUTH_USER")
+AUTH_PASS = os.getenv("AUTH_PASS")
 
 
 def check_auth(username, password):
@@ -54,10 +59,6 @@ def sanitize(text: str, max_len: int = 500) -> str:
     text = text.strip()[:max_len]
     text = re.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F]", "", text)
     return text
-
-
-def escape(text: str) -> str:
-    return html.escape(text, quote=True)
 
 
 # ── Rate Limiting (en memoria) ─────────────────────────────────────
@@ -85,7 +86,7 @@ def add_security_headers(response):
         "script-src 'self'; "
         "style-src 'self' 'unsafe-inline'; "
         "img-src 'self' https://upload.wikimedia.org; "
-        "frame-src https://open.spotify.com; "
+        "media-src https://playerservices.streamtheworld.com; "
         "connect-src 'self'"
     )
     response.headers["X-Content-Type-Options"] = "nosniff"
@@ -116,31 +117,16 @@ def chat():
         return jsonify({"error": "JSON inválido"}), 400
 
     query = sanitize(data.get("query", ""))
+    session_id = data.get("session_id", "flask_session")
     if not query:
         return jsonify({"response": "Por favor ingresa una consulta válida."})
 
-    query_lower = query.lower()
-    resultados = [
-        p for p in Productos
-        if any(word in p.lower() for word in query_lower.split())
-    ][:3]
-
-    if not resultados:
-        msg = (
-            f"Lo siento, no encontré productos relacionados con "
-            f"'{escape(query)}'."
-        )
-        return jsonify({"response": msg})
-
-    respuesta = (
-        f"Encontré los siguientes productos relacionados con "
-        f"'{escape(query)}':\n\n"
-    )
-    for p in resultados:
-        respuesta += f"• {escape(p)}\n"
-    respuesta += "\n¿Deseas conocer más detalles de algún producto?"
-
-    return jsonify({"response": respuesta})
+    # Usar el motor RAG real en lugar del buscador por palabras
+    try:
+        respuesta_completa = "".join(list(rag_consultar(query, session_id=session_id)))
+        return jsonify({"response": respuesta_completa})
+    except Exception as e:
+        return jsonify({"response": f"Error al procesar la consulta: {e}"}), 500
 
 
 if __name__ == "__main__":

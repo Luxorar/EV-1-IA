@@ -7,6 +7,7 @@ en un grid de tarjetas con buscador y filtro por categoría.
 
 import streamlit as st
 import utils
+from security import escape_html
 
 utils.inject_css()
 
@@ -29,15 +30,19 @@ st.markdown(f"**{len(filtrados)}** producto(s) encontrado(s)")
 
 st.markdown('<div class="product-grid">', unsafe_allow_html=True)
 for p in filtrados:
-    inicial = p['producto'][0].upper() if p['producto'] else "🛒"
+    inicial = escape_html(p['producto'][0].upper() if p['producto'] else "🛒")
+    nombre = escape_html(p['producto'])
+    marca = escape_html(p['marca'])
+    categoria = escape_html(p['categoria'])
+    precio = escape_html(p['precio'])
     st.markdown(f"""
     <div class="product-card-wrapper">
         <div class="product-card">
             <div class="product-icon">{inicial}</div>
-            <div class="category-badge">{p['categoria']}</div>
-            <h3>{p['producto']}</h3>
-            <div class="brand">{p['marca']}</div>
-            <div class="price">{p['precio']}</div>
+            <div class="category-badge">{categoria}</div>
+            <h3>{nombre}</h3>
+            <div class="brand">{marca}</div>
+            <div class="price">{precio}</div>
         </div>
     </div>
     """, unsafe_allow_html=True)

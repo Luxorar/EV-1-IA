@@ -9,7 +9,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from security import sanitize_input, detect_prompt_injection, log_event, chat_limiter, get_client_ip, escape_ai_output
+from security import (
+    sanitize_input, detect_prompt_injection, log_event,
+    chat_limiter, get_client_ip, escape_ai_output,
+    validate_ai_output, acquire_llm_slot, release_llm_slot,
+    LLM_TIMEOUT_SECS,
+)
 
 import import_ipynb  # noqa: F401
 import Unimarc  # noqa: F811
@@ -39,17 +44,34 @@ def consultar(consulta: str, session_id: str = "web_session"):
         yield "No puedo procesar esa solicitud. Por favor haz una pregunta sobre productos de UNIMARC."
         return
 
+    # Control de concurrencia: límite de requests simultáneas al LLM
+    if not acquire_llm_slot(timeout=LLM_TIMEOUT_SECS):
+        log_event("LLM_CONCURRENCY_LIMIT", detail=consulta[:50],
+                  session_id=rate_key, level="warning")
+        yield "El servicio está saturado. Intenta de nuevo en un momento."
+        return
+
     log_event("CHAT_QUERY", detail=consulta[:100],
               session_id=rate_key, level="info")
 
-    relevante = Unimarc.buscar_vectorial(consulta)
-    contexto = "\n".join(relevante) if relevante else "Producto no encontrado"
-    input_text = f"{consulta}\n\nBuscando datos...\n{contexto}"
-    config = {"configurable": {"session_id": session_id}}
     try:
+        relevante = Unimarc.buscar_vectorial(consulta)
+        contexto = "\n".join(relevante) if relevante else "Producto no encontrado"
+        input_text = f"{consulta}\n\nBuscando datos...\n{contexto}"
+        config = {"configurable": {"session_id": session_id}}
+        full_response = ""
         for chunk in Unimarc.conversation.stream({"input": input_text}, config):
-            yield escape_ai_output(chunk.content)
+            safe_chunk = escape_ai_output(chunk.content)
+            full_response += safe_chunk
+            yield safe_chunk
+        # Validación post-procesamiento de la respuesta completa
+        validated = validate_ai_output(full_response)
+        if validated != full_response:
+            log_event("AI_OUTPUT_BLOCKED", detail=validated[:100],
+                      session_id=rate_key, level="warning")
     except Exception as e:
         log_event("CHAT_ERROR", detail=str(e)[:100],
                   session_id=rate_key, level="error")
         yield f"Error al procesar la consulta: {e}"
+    finally:
+        release_llm_slot()

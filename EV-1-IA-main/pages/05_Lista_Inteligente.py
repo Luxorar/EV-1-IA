@@ -8,6 +8,7 @@ Incluye checkboxes para marcar items como comprados.
 
 import streamlit as st
 import utils
+from security import escape_html
 
 utils.inject_css()
 
@@ -54,12 +55,16 @@ else:
             nuevo_hecho = st.checkbox("", key=f"chk_{idx}", value=hecho)
             st.session_state.lista[idx]["comprado"] = nuevo_hecho
         with cols[1]:
+            prod_nombre = escape_html(item['producto'])
+            prod_marca = escape_html(item['marca'])
+            line_style = 'line-through' if nuevo_hecho else 'none'
+            color = '#bbb' if nuevo_hecho else '#222'
             st.markdown(f"""
             <div class="list-item" style="margin:0;padding:0.6rem 0;border:none;box-shadow:none;">
                 <div class="item-info">
                     <div>
-                        <div class="name" style="text-decoration:{'line-through' if nuevo_hecho else 'none'};color:{'#bbb' if nuevo_hecho else '#222'};">{item['producto']}</div>
-                        <div class="brand">{item['marca']}</div>
+                        <div class="name" style="text-decoration:{line_style};color:{color};">{prod_nombre}</div>
+                        <div class="brand">{prod_marca}</div>
                     </div>
                 </div>
             </div>
