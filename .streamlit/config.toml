@@ -1,0 +1,18 @@
+[server]
+maxMessageSize = 5
+enableCORS = false
+enableXsrfProtection = true
+maxUploadSize = 5
+
+[global]
+developmentMode = false
+
+[runner]
+fastReruns = true
+
+[browser]
+gatherUsageStats = false
+serverAddress = "127.0.0.1"
+
+[theme]
+base = "light"

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unimarc Asistente IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Unimarc_logo.svg/200px-Unimarc_logo.svg.png" alt="Logo Unimarc" class="logo">
+        <h1>Asistente Virtual Unimarc</h1>
+        <p>¡Bienvenido! Pregúntame sobre productos, precios y ubicaciones en tienda.</p>
+    </header>
+
+    <div class="container">
+        <section id="chat">
+            <h2>Chat con el Asistente</h2>
+            <div id="chat-window">
+                <div class="message bot">¡Hola! Soy tu asistente de Unimarc. ¿En qué puedo ayudarte hoy? Pregúntame por productos como "leche", "pan" o "arroz".</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Escribe tu consulta aquí...">
+                <button id="send-btn">Enviar</button>
+            </div>
+        </section>
+
+        <section id="info">
+            <h2>Información del Proyecto</h2>
+            <p>Este asistente usa inteligencia artificial para ayudarte a encontrar productos en Unimarc de manera rápida y precisa.</p>
+            <p><strong>Ejemplos de consultas:</strong></p>
+            <ul>
+                <li>"¿Dónde encuentro leche?"</li>
+                <li>"Busco arroz integral"</li>
+                <li>"Precio de pan de molde"</li>
+            </ul>
+        </section>
+
+        <section id="radio">
+            <h2>Radio UNIMARC</h2>
+            <p>Disfruta de las radios chilenas en vivo mientras navegas.</p>
+            <div class="radio-controls">
+                <select id="radio-select">
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/FMDOSAAC_SC">FM Dos — Música variada</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/CONCIERTOAAC_SC">Radio Concierto — Pop &amp; Rock</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/CORAZONAAC_SC">Radio Corazón — Romántica</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CHILEAAC_SC">Los 40 Chile — Éxitos</option>
+                    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/PUDAHUELAAC_SC">Radio Pudahuel — Clásicos</option>
+                </select>
+                <button id="play-radio">▶ Reproducir</button>
+            </div>
+            <audio id="radio-player" controls style="width:100%;margin-top:1rem;display:none;"></audio>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Unimarc - Asistente IA. Proyecto EV-1-IA.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
