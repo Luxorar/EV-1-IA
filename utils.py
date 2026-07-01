@@ -70,3 +70,11 @@ def inject_css():
     css_path = os.path.join(os.path.dirname(__file__), "static", "styles.css")
     with open(css_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+def get_logo_base64():
+    import base64, os
+    logo_path = os.path.join(os.path.dirname(__file__), "static", "logo.webp")
+    if os.path.exists(logo_path):
+        with open(logo_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return ""

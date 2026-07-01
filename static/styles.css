@@ -1,45 +1,41 @@
-/* ============================================================
-   UNIMARC 2026 — SISTEMA DE DISEÑO AMPLIADO
-   Rojo corporativo: #E31837
-   ============================================================ */
-
 :root {
     --rojo-unimarc: #E31837;
-    --rojo-hover: #b81027;
-    --blanco: #ffffff;
-    --fondo-gris: #f8f9fa;
-    --texto-oscuro: #212529;
-    --borde-tarjeta: rgba(227, 24, 55, 0.08);
+    --rojo-oscuro: #C41230;
+    --rojo-hover: #A00E28;
+    --rojo-claro: #FF6B6B;
+    --blanco: #FFFFFF;
+    --fondo: #F5F5F5;
+    --texto: #212529;
+    --texto-secundario: #6C757D;
+    --borde: #E0E0E0;
+    --sombra: rgba(0, 0, 0, 0.08);
+    --sombra-roja: rgba(227, 24, 55, 0.25);
 }
 
 /* ── Animaciones ── */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(0); }
 }
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.05); }
+    50% { transform: scale(1.05); }
 }
 @keyframes shimmer {
-    0%   { background-position: -200% 0; }
+    0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
 @keyframes radioPulse {
     0%, 100% { opacity: 0.4; transform: scaleY(0.4); }
-    50%      { opacity: 1; transform: scaleY(1); }
-}
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    50% { opacity: 1; transform: scaleY(1); }
 }
 @keyframes floatMascot {
     0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
+    50% { transform: translateY(-6px); }
 }
 @keyframes blinkEyes {
     0%, 95%, 100% { transform: scaleY(1); }
@@ -52,44 +48,17 @@
 }
 @keyframes wiggle {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-6deg); }
-    75% { transform: rotate(6deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
 }
 @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 6px 12px rgba(227, 24, 55, 0.3); }
-    50% { box-shadow: 0 6px 25px rgba(227, 24, 55, 0.6), 0 0 40px rgba(227, 24, 55, 0.2); }
-}
-@keyframes bounceHappy {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-20px) scale(1.1); }
-    50% { transform: translateY(-5px) scale(1.05); }
-    70% { transform: translateY(-12px); }
-}
-@keyframes floatBubble {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(-5px); opacity: 0.95; }
-}
-@keyframes fadeInOut {
-    0%, 100% { opacity: 1; }
-    20% { opacity: 0.6; }
-    80% { opacity: 0.6; }
-}
-@keyframes eyeHappy {
-    0%, 100% { border-radius: 4px; height: 12px; }
-    50% { border-radius: 50%; height: 14px; width: 10px; }
-}
-@keyframes eyeWink {
-    0%, 90%, 100% { transform: scaleY(1); }
-    95% { transform: scaleY(0.1); }
-}
-@keyframes eyeSurprise {
-    0%, 100% { width: 8px; height: 12px; border-radius: 4px; }
-    50% { width: 12px; height: 14px; border-radius: 50%; background: #00ffcc; }
+    0%, 100% { box-shadow: 0 4px 12px rgba(227, 24, 55, 0.3); }
+    50% { box-shadow: 0 4px 20px rgba(227, 24, 55, 0.5); }
 }
 
 /* ── Base ── */
 .stApp {
-    background: #f5f5f5;
+    background: var(--fondo);
 }
 .stApp > header {
     display: none !important;
@@ -100,39 +69,36 @@
 }
 .block-container {
     max-width: 1200px;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
 }
-p, li, .stMarkdown {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-}
-h1, h2, h3, h4 {
+p, li, .stMarkdown, h1, h2, h3, h4 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
 }
 
 /* ── Botones ── */
 .stButton button {
-    border-radius: 10px !important;
+    border-radius: 8px !important;
     font-weight: 600 !important;
-    transition: all 0.25s ease !important;
+    transition: all 0.2s ease !important;
     border: none !important;
 }
 .stButton button[kind="primary"] {
-    background: #E31837 !important;
+    background: var(--rojo-unimarc) !important;
     color: white !important;
 }
 .stButton button[kind="primary"]:hover {
-    background: #c41230 !important;
+    background: var(--rojo-oscuro) !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(227, 24, 55, 0.3);
+    box-shadow: 0 4px 12px var(--sombra-roja);
 }
 .stButton button[kind="secondary"] {
     background: transparent !important;
-    color: #E31837 !important;
-    border: 2px solid #E31837 !important;
+    color: var(--rojo-unimarc) !important;
+    border: 2px solid var(--rojo-unimarc) !important;
 }
 .stButton button[kind="secondary"]:hover {
-    background: #E31837 !important;
+    background: var(--rojo-unimarc) !important;
     color: white !important;
 }
 
@@ -140,27 +106,39 @@ h1, h2, h3, h4 {
 div[data-testid="stTextInput"] input,
 div[data-testid="stSelectbox"] div[data-baseweb="select"],
 .stTextInput input {
-    border-radius: 10px !important;
-    border: 2px solid #e0e0e0 !important;
-    transition: border-color 0.25s ease !important;
+    border-radius: 8px !important;
+    border: 2px solid var(--borde) !important;
+    transition: border-color 0.2s ease !important;
     padding: 0.5rem 0.75rem !important;
 }
 div[data-testid="stTextInput"] input:focus,
 div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
-    border-color: #E31837 !important;
+    border-color: var(--rojo-unimarc) !important;
     box-shadow: 0 0 0 3px rgba(227, 24, 55, 0.15) !important;
 }
 
 /* ── Sidebar ── */
 section[data-testid="stSidebar"] {
-    background: white;
-    border-right: 1px solid #eee;
+    background: var(--rojo-oscuro) !important;
+    border-right: none !important;
 }
 section[data-testid="stSidebar"] > div {
     padding: 1rem 1rem 2rem;
 }
+section[data-testid="stSidebar"] .stMarkdown,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] .sidebar-timer {
+    color: white !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] p {
+    color: white !important;
+}
 .sidebar-brand {
-    color: #E31837;
+    color: white !important;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: -0.5px;
@@ -170,85 +148,133 @@ section[data-testid="stSidebar"] > div {
     display: block;
     font-size: 0.7rem;
     font-weight: 400;
-    color: #999;
+    color: rgba(255,255,255,0.7);
     letter-spacing: 0;
 }
-.sidebar-radio {
-    background: #fafafa;
-    border-radius: 12px;
-    padding: 1rem;
-    margin: 0.5rem 0;
+
+/* Sidebar nav links */
+section[data-testid="stSidebar"] a {
+    color: rgba(255,255,255,0.85) !important;
+    font-weight: 500;
 }
-.sidebar-radio audio {
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
+section[data-testid="stSidebar"] a:hover {
+    color: white !important;
 }
-.sidebar-radio-label {
-    font-size: 0.75rem;
-    color: #888;
-    text-align: center;
-    margin-top: 4px;
+
+/* Sidebar divider */
+section[data-testid="stSidebar"] hr {
+    border-color: rgba(255,255,255,0.2) !important;
 }
+
+/* Sidebar selectbox (radio station) */
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] > div {
+    background: rgba(255,255,255,0.15) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: white !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    background: transparent !important;
+    border: none !important;
+    color: white !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[role="button"] {
+    color: white !important;
+    background: transparent !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] ul {
+    background: var(--rojo-oscuro) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] li {
+    color: white !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] li:hover {
+    background: rgba(255,255,255,0.15) !important;
+}
+
+/* Sidebar logout button */
+section[data-testid="stSidebar"] .stButton button {
+    background: rgba(255,255,255,0.15) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    border-radius: 8px !important;
+}
+section[data-testid="stSidebar"] .stButton button:hover {
+    background: rgba(255,255,255,0.25) !important;
+    border-color: rgba(255,255,255,0.5) !important;
+}
+
 .sidebar-timer {
     font-size: 0.7rem;
-    color: #999;
+    color: rgba(255,255,255,0.7) !important;
     text-align: center;
     margin-top: 8px;
 }
 
-/* ── Login / Auth ── */
-.login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70vh;
-    padding: 2rem;
+/* Radio in sidebar */
+.sidebar-radio {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
 }
+.sidebar-radio audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 6px;
+}
+.sidebar-radio-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* ── Sidebar Radio text ── */
+section[data-testid="stSidebar"] h3 {
+    color: white !important;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* ── Login ── */
 .login-card {
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: white;
     border-radius: 24px;
     padding: 3rem 2.5rem;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.04);
     max-width: 420px;
     width: 100%;
     text-align: center;
     animation: slideUp 0.5s ease;
 }
 .login-card h1 {
-    color: #E31837;
+    color: var(--rojo-unimarc);
     font-size: 2.5rem;
     font-weight: 900;
     margin: 0 0 0.3rem;
     letter-spacing: -1px;
 }
 .login-card .subtitle {
-    color: #888;
+    color: var(--texto-secundario);
     font-size: 0.95rem;
     margin-bottom: 2rem;
 }
-.login-card .footer {
-    color: #bbb;
-    font-size: 0.75rem;
-    margin-top: 2rem;
-}
-.login-card .stButton button {
-    width: 100%;
-    padding: 0.6rem !important;
-    font-size: 1rem !important;
+.login-card .logo-img {
+    max-width: 120px;
+    margin-bottom: 1rem;
 }
 
 /* ── Hero ── */
 .hero {
-    background: linear-gradient(135deg, #E31837 0%, #ff4d4d 50%, #ff6b6b 100%);
+    background: linear-gradient(135deg, var(--rojo-oscuro) 0%, var(--rojo-unimarc) 50%, var(--rojo-claro) 100%);
     padding: 3rem 2rem;
     border-radius: 20px;
     color: white;
     text-align: center;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 8px 30px rgba(227, 24, 55, 0.25);
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px var(--sombra-roja);
     animation: fadeIn 0.6s ease;
 }
 .hero h1 {
@@ -261,20 +287,18 @@ section[data-testid="stSidebar"] > div {
     font-size: 1.15rem;
     opacity: 0.9;
     margin: 0;
-    font-weight: 400;
 }
 
-/* ── Product Grid (responsive) ── */
+/* ── Product Grid ── */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
     margin: 1rem 0;
 }
-/* --- Rediseño de Tarjetas de Producto --- */
 .product-card-wrapper {
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-    animation: fadeIn 0.5s ease forwards;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: fadeIn 0.4s ease forwards;
     opacity: 0;
 }
 .product-card-wrapper:nth-child(1) { animation-delay: 0.05s; }
@@ -289,18 +313,14 @@ section[data-testid="stSidebar"] > div {
 .product-card-wrapper:nth-child(10) { animation-delay: 0.5s; }
 .product-card-wrapper:nth-child(11) { animation-delay: 0.55s; }
 .product-card-wrapper:nth-child(12) { animation-delay: 0.6s; }
-.product-card-wrapper:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(223, 24, 55, 0.15);
-}
 
 /* ── Product Card ── */
 .product-card {
-    border: 1px solid var(--borde-tarjeta);
+    border: 1px solid rgba(227, 24, 55, 0.12);
     border-radius: 16px;
     background: var(--blanco);
     padding: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
 }
@@ -311,11 +331,11 @@ section[data-testid="stSidebar"] > div {
     width: 100%; height: 4px;
     background: var(--rojo-unimarc);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
 }
 .product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(227, 24, 55, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px var(--sombra-roja);
 }
 .product-card:hover::before {
     opacity: 1;
@@ -323,7 +343,7 @@ section[data-testid="stSidebar"] > div {
 .product-card .product-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--rojo-unimarc), #ff6b6b);
+    background: linear-gradient(135deg, var(--rojo-unimarc), var(--rojo-claro));
     color: white;
     display: flex;
     align-items: center;
@@ -336,10 +356,10 @@ section[data-testid="stSidebar"] > div {
     margin: 0 0 0.2rem;
     font-size: 1rem;
     font-weight: 700;
-    color: var(--texto-oscuro);
+    color: var(--texto);
 }
 .product-card .brand {
-    color: #888;
+    color: var(--texto-secundario);
     font-size: 0.82rem;
     margin-bottom: 0.6rem;
 }
@@ -350,11 +370,11 @@ section[data-testid="stSidebar"] > div {
     margin: 0.3rem 0;
 }
 .product-card .category-badge {
-    background: var(--fondo-gris);
+    background: var(--fondo);
     padding: 0.2rem 0.7rem;
     border-radius: 20px;
     font-size: 0.72rem;
-    color: #666;
+    color: var(--texto-secundario);
     display: inline-block;
     font-weight: 500;
 }
@@ -367,13 +387,13 @@ section[data-testid="stSidebar"] > div {
     margin: 1rem 0;
 }
 .offer-card {
-    background: linear-gradient(135deg, #E31837 0%, #ff4d4d 50%, #ff6b6b 100%);
+    background: linear-gradient(135deg, var(--rojo-oscuro) 0%, var(--rojo-unimarc) 50%, var(--rojo-claro) 100%);
     border-radius: 16px;
     padding: 1.5rem;
     color: white;
-    box-shadow: 0 6px 25px rgba(227, 24, 55, 0.2);
-    transition: all 0.3s ease;
-    animation: fadeIn 0.5s ease forwards;
+    box-shadow: 0 6px 20px var(--sombra-roja);
+    transition: all 0.2s ease;
+    animation: fadeIn 0.4s ease forwards;
     opacity: 0;
     position: relative;
     overflow: hidden;
@@ -388,7 +408,7 @@ section[data-testid="stSidebar"] > div {
 }
 .offer-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 35px rgba(227, 24, 55, 0.3);
+    box-shadow: 0 10px 30px var(--sombra-roja);
 }
 .offer-card .product-name {
     font-size: 1.05rem;
@@ -422,13 +442,13 @@ section[data-testid="stSidebar"] > div {
 
 /* ── Ad Banner ── */
 .ad-banner {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: linear-gradient(135deg, var(--rojo-oscuro) 0%, #1a1a2e 100%);
     border-radius: 16px;
     padding: 2.5rem 2rem;
     color: white;
     text-align: center;
     margin: 2rem 0;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     animation: fadeIn 0.6s ease;
 }
 .ad-banner h2 {
@@ -443,86 +463,21 @@ section[data-testid="stSidebar"] > div {
     font-size: 0.95rem;
 }
 
-/* ── Chat Messages ── */
-.chat-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-.chat-msg-user, .chat-msg-bot {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 1.2rem;
-    animation: fadeIn 0.3s ease;
-}
-.chat-msg-user {
-    justify-content: flex-end;
-}
-.chat-msg-bot {
-    justify-content: flex-start;
-}
-.chat-avatar {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-.chat-msg-user .chat-avatar {
-    order: 1;
-    margin-left: 10px;
-    background: #E31837;
-    color: white;
-}
-.chat-msg-bot .chat-avatar {
-    margin-right: 10px;
-    background: #f0f0f0;
-    color: #E31837;
-}
-.chat-bubble {
-    max-width: 72%;
-    padding: 12px 18px;
-    font-size: 0.93rem;
-    line-height: 1.55;
-    word-wrap: break-word;
-}
-.chat-msg-user .chat-bubble {
-    background: #E31837;
-    color: white;
-    border-radius: 20px 20px 4px 20px;
-    box-shadow: 0 3px 12px rgba(227, 24, 55, 0.2);
-}
-.chat-msg-bot .chat-bubble {
-    background: white;
-    color: #333;
-    border-radius: 20px 20px 20px 4px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-    border: 1px solid #f0f0f0;
-}
-.chat-bubble p {
-    margin: 0;
-}
-.chat-bubble p + p {
-    margin-top: 0.5rem;
-}
-
-/* ── Chat Input (Streamlit override) ── */
+/* ── Chat Input ── */
 div[data-testid="stChatInput"] {
-    border: 2px solid #e0e0e0 !important;
+    border: 2px solid var(--borde) !important;
     border-radius: 24px !important;
     padding: 0.3rem 0.3rem 0.3rem 1.2rem !important;
     background: white !important;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04) !important;
-    transition: all 0.25s ease !important;
+    box-shadow: 0 2px 12px var(--sombra) !important;
+    transition: border-color 0.2s ease !important;
 }
 div[data-testid="stChatInput"]:focus-within {
-    border-color: #E31837 !important;
+    border-color: var(--rojo-unimarc) !important;
     box-shadow: 0 2px 20px rgba(227, 24, 55, 0.1) !important;
 }
 div[data-testid="stChatInput"] button {
-    background: #E31837 !important;
+    background: var(--rojo-unimarc) !important;
     color: white !important;
     border-radius: 50% !important;
     width: 38px !important;
@@ -531,10 +486,10 @@ div[data-testid="stChatInput"] button {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: all 0.25s ease !important;
+    transition: all 0.2s ease !important;
 }
 div[data-testid="stChatInput"] button:hover {
-    background: #c41230 !important;
+    background: var(--rojo-oscuro) !important;
     transform: scale(1.05);
 }
 
@@ -542,18 +497,17 @@ div[data-testid="stChatInput"] button:hover {
 .radio-card {
     text-align: center;
     padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #fafafa, #fff);
+    background: white;
     border-radius: 20px;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 20px var(--sombra);
+    border: 1px solid var(--fondo);
     animation: fadeIn 0.5s ease;
 }
 .radio-icon {
     font-size: 3.5rem;
     margin-bottom: 0.5rem;
     display: inline-block;
-    animation: none;
 }
 .radio-waves {
     display: flex;
@@ -567,7 +521,7 @@ div[data-testid="stChatInput"] button:hover {
     display: block;
     width: 5px;
     height: 20px;
-    background: #E31837;
+    background: var(--rojo-unimarc);
     border-radius: 3px;
     animation: radioPulse 1.2s ease-in-out infinite;
 }
@@ -578,11 +532,11 @@ div[data-testid="stChatInput"] button:hover {
 .radio-waves span:nth-child(5) { animation-delay: 0.6s; height: 16px; }
 .radio-card h2 {
     margin: 0;
-    color: #333;
+    color: var(--texto);
     font-size: 1.4rem;
 }
 .radio-card .status {
-    color: #999;
+    color: var(--texto-secundario);
     font-size: 0.85rem;
     margin-top: 0.3rem;
 }
@@ -593,63 +547,38 @@ div[data-testid="stChatInput"] button:hover {
     border-radius: 14px;
     padding: 1rem 1.2rem;
     margin-bottom: 0.6rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    border: 1px solid #f5f5f5;
-    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px var(--sombra);
+    border: 1px solid var(--fondo);
+    transition: all 0.2s ease;
     animation: fadeIn 0.3s ease;
 }
 .list-item:hover {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    border-color: #eee;
-}
-.list-item .item-info {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    box-shadow: 0 4px 20px var(--sombra);
+    border-color: var(--borde);
 }
 .list-item .item-info .name {
     font-weight: 600;
-    color: #222;
+    color: var(--texto);
 }
 .list-item .item-info .brand {
     font-size: 0.8rem;
-    color: #999;
+    color: var(--texto-secundario);
 }
 .list-item .item-qty {
-    background: #f5f5f5;
+    background: var(--fondo);
     padding: 0.2rem 0.7rem;
     border-radius: 20px;
     font-size: 0.82rem;
     font-weight: 600;
     color: #555;
 }
-.list-item .item-prices {
-    text-align: right;
-}
-.list-item .item-prices .unit {
-    font-size: 0.78rem;
-    color: #999;
-}
 .list-item .item-prices .subtotal {
     font-size: 1.05rem;
     font-weight: 700;
-    color: #E31837;
-}
-.list-item .item-remove {
-    color: #ccc;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: color 0.2s;
-}
-.list-item .item-remove:hover {
-    color: #E31837;
-}
-.list-item.comprado .item-info .name {
-    text-decoration: line-through;
-    color: #bbb;
+    color: var(--rojo-unimarc);
 }
 .list-total {
-    background: linear-gradient(135deg, #E31837, #ff4d4d);
+    background: linear-gradient(135deg, var(--rojo-unimarc), var(--rojo-claro));
     border-radius: 14px;
     padding: 1.2rem 1.5rem;
     color: white;
@@ -666,9 +595,9 @@ div[data-testid="stChatInput"] button:hover {
     font-weight: 900;
 }
 
-/* ── Club Banner ── */
+/* ── Club / Banner ── */
 .club-banner {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    background: linear-gradient(135deg, var(--rojo-oscuro), #1a1a2e);
     border-radius: 16px;
     padding: 2rem;
     color: white;
@@ -688,188 +617,117 @@ div[data-testid="stChatInput"] button:hover {
 }
 .club-banner .btn {
     display: inline-block;
-    background: #E31837;
+    background: var(--rojo-unimarc);
     color: white;
     padding: 0.6rem 2rem;
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
 }
 .club-banner .btn:hover {
-    background: #c41230;
+    background: var(--rojo-oscuro);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(227, 24, 55, 0.3);
-}
-
-/* ── Categorías en Home ── */
-.cat-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 1rem 0;
-}
-.cat-card {
-    background: white;
-    border-radius: 14px;
-    padding: 1.2rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    transition: all 0.25s ease;
-    border: 1px solid #f5f5f5;
-    text-align: center;
-}
-.cat-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-.cat-card .cat-name {
-    font-weight: 700;
-    color: #E31837;
-    font-size: 1rem;
-}
-.cat-card .cat-count {
-    font-size: 0.82rem;
-    color: #999;
-    margin-top: 0.2rem;
+    box-shadow: 0 4px 12px var(--sombra-roja);
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: #f5f5f5;
-}
-::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #E31837;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--fondo); }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rojo-unimarc); }
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
     .product-grid { grid-template-columns: repeat(2, 1fr); }
     .offer-grid { grid-template-columns: repeat(2, 1fr); }
-    .cat-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-    .block-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
+    .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
     .product-grid { grid-template-columns: 1fr; }
     .offer-grid { grid-template-columns: 1fr; }
-    .cat-grid { grid-template-columns: repeat(2, 1fr); }
     .hero { padding: 2rem 1.5rem; }
     .hero h1 { font-size: 1.8rem; }
     .hero p { font-size: 1rem; }
     .login-card { padding: 2rem 1.5rem; }
-    .chat-bubble { max-width: 85%; }
     .offer-card .offer-price { font-size: 1.4rem; }
     .list-total { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
 @media (max-width: 480px) {
-    .cat-grid { grid-template-columns: 1fr; }
     .product-card { padding: 1rem; }
     .offer-card { padding: 1.2rem; }
 }
 
-/* --- El Personaje: "Uni" (Mascota Digital 2026 v2 — Animada) --- */
+/* ── Mascota Uni ── */
 .mascot-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(135deg, #ffffff 0%, #fff5f6 100%);
-    border: 2px solid var(--rojo-unimarc);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 20px;
-    padding: 1.5rem 1.5rem 1rem;
-    margin: 1rem 0;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+    padding: 1.2rem 1rem 0.8rem;
+    margin: 0.8rem 0;
+    backdrop-filter: blur(8px);
     animation: fadeIn 0.6s ease-out;
     position: relative;
 }
 
-/* ── Burbuja de diálogo ── */
 .uni-speech-bubble {
     background: white;
-    border: 2px solid var(--rojo-unimarc);
+    border: none;
     border-radius: 16px;
     padding: 0.7rem 1rem;
     margin-bottom: 0.8rem;
     position: relative;
     max-width: 200px;
-    animation: floatBubble 3s ease-in-out infinite;
-    box-shadow: 0 4px 15px rgba(227, 24, 55, 0.1);
+    animation: floatMascot 3s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     z-index: 2;
 }
 .uni-speech-bubble .uni-speech-text {
     font-size: 0.78rem;
-    color: var(--texto-oscuro);
+    color: var(--texto);
     line-height: 1.35;
     display: block;
     text-align: center;
     font-weight: 500;
 }
-.uni-speech-bubble .uni-speech-icon {
-    font-size: 0.9rem;
-    display: inline;
-}
-/* Colita de la burbuja (triángulo invertido) */
 .uni-speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid white;
-    filter: drop-shadow(0 2px 2px rgba(227, 24, 55, 0.08));
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
     z-index: 3;
 }
-/* Borde del triángulo */
-.uni-speech-bubble::before {
-    content: '';
-    position: absolute;
-    bottom: -13px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 12px solid var(--rojo-unimarc);
-    z-index: 1;
-}
 
-/* ── Cuerpo de Uni ── */
 .uni-mascot {
-    width: 75px;
-    height: 75px;
-    background: linear-gradient(145deg, var(--rojo-unimarc), #c41230);
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(145deg, var(--rojo-unimarc), var(--rojo-oscuro));
     border-radius: 20px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 6px 12px rgba(227, 24, 55, 0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     animation: floatMascot 3s ease-in-out infinite, glowPulse 4s ease-in-out infinite;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 .uni-mascot:hover {
-    animation: bounceHappy 0.6s ease, glowPulse 2s ease-in-out infinite;
+    transform: scale(1.05);
 }
 
-/* Pantalla LED del rostro de Uni */
 .uni-face {
-    width: 55px;
-    height: 45px;
+    width: 50px;
+    height: 40px;
     background: #1a1a1a;
     border-radius: 12px;
     position: relative;
@@ -880,8 +738,6 @@ div[data-testid="stChatInput"] button:hover {
     box-sizing: border-box;
     border: 1px solid #333;
 }
-
-/* Ojos LED digitales — expresión normal (parpadear) */
 .uni-face::before, .uni-face::after {
     content: '';
     width: 8px;
@@ -892,92 +748,83 @@ div[data-testid="stChatInput"] button:hover {
     box-shadow: 0 0 6px rgba(0, 255, 204, 0.4);
     transition: all 0.3s ease;
 }
-
-/* Boca LED (sonrisa digital) */
 .uni-face .uni-mouth {
     position: absolute;
-    bottom: 7px;
-    width: 20px;
+    bottom: 6px;
+    width: 18px;
     height: 4px;
     background: #00ffcc;
     border-radius: 2px;
     box-shadow: 0 0 4px rgba(0, 255, 204, 0.3);
     animation: blinkEyes 5s infinite;
 }
-
-/* Rueditas del carrito */
 .uni-mascot::after {
     content: '';
     position: absolute;
-    bottom: -9px;
-    width: 55px;
-    height: 10px;
-    background: radial-gradient(circle, #555 35%, transparent 40%);
-    background-size: 16px 10px;
+    bottom: -8px;
+    width: 50px;
+    height: 9px;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 35%, transparent 40%);
+    background-size: 14px 9px;
     background-repeat: space;
 }
 
-/* ── Brazos animados ── */
 .uni-arm-left, .uni-arm-right {
     position: absolute;
-    width: 18px;
-    height: 32px;
+    width: 16px;
+    height: 28px;
     background: var(--rojo-unimarc);
-    border-radius: 9px;
+    border-radius: 8px;
     top: 20px;
     z-index: -1;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 .uni-arm-left {
-    left: -10px;
+    left: -9px;
     transform: rotate(15deg);
     transform-origin: top center;
     animation: wiggle 2.5s ease-in-out infinite;
 }
 .uni-arm-right {
-    right: -10px;
+    right: -9px;
     transform: rotate(-15deg);
     transform-origin: top center;
     animation: wiggle 2.5s ease-in-out infinite 0.5s;
 }
 
-/* ── Nombre y tagline ── */
 .uni-name {
-    color: var(--rojo-unimarc);
-    font-size: 1.1rem;
+    color: white !important;
+    font-size: 1rem;
     font-weight: 800;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     letter-spacing: -0.3px;
 }
 .uni-tagline {
-    color: #6c757d;
-    font-size: 0.78rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.72rem;
     margin: 0.1rem 0 0 0;
     text-align: center;
 }
 
-/* ── Expresiones mediante clases ── */
-/* Feliz: ojos en arco */
+/* ── Expresiones de Uni ── */
 .uni-face.expression-happy::before,
 .uni-face.expression-happy::after {
     border-radius: 50% 50% 4px 4px;
     height: 8px;
     width: 10px;
-    animation: eyeHappy 3s ease-in-out infinite;
-}
-/* Guiño: ojo derecho se cierra */
-.uni-face.expression-wink::before {
-    animation: blinkEyes 4s infinite;
 }
 .uni-face.expression-wink::after {
-    animation: eyeWink 6s infinite;
+    animation: none;
+    transform: scaleY(0.1);
 }
-/* Sorpresa: ojos grandes redondos */
 .uni-face.expression-surprise::before,
 .uni-face.expression-surprise::after {
-    animation: eyeSurprise 2s ease-in-out infinite;
+    width: 12px;
+    height: 14px;
+    border-radius: 50%;
+    background: #00ffcc;
 }
-/* Hablando: vibración + ojos parpadeo rápido */
+
 .mascot-container.talking .uni-mascot {
     animation: talkMascot 0.4s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
 }
@@ -986,137 +833,18 @@ div[data-testid="stChatInput"] button:hover {
     animation: blinkEyes 1.5s infinite;
 }
 
-/* --- Estilo de Burbujas del Chat mejoradas --- */
-.chat-msg-bot {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+/* ── Logo en la sidebar ── */
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.sidebar-logo img {
+    max-width: 100px;
+    border-radius: 12px;
+}
+
+/* ── Logo en login ── */
+.login-logo {
+    max-width: 100px;
     margin-bottom: 1rem;
-}
-
-.bot-avatar-container {
-    flex-shrink: 0;
-}
-
-.chat-bubble {
-    border-radius: 16px;
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   Clases para Flask template (index.html + script.js)
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ── Chat ── */
-#chat-window {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1rem;
-    background: #fafafa;
-    border-radius: 16px;
-    min-height: 300px;
-    max-height: 500px;
-    overflow-y: auto;
-}
-.message.bot, .message.user {
-    padding: 12px 18px;
-    border-radius: 20px;
-    max-width: 72%;
-    animation: fadeIn 0.3s ease;
-    word-wrap: break-word;
-    font-size: 0.93rem;
-    line-height: 1.55;
-}
-.message.bot {
-    background: white;
-    color: #333;
-    border-radius: 20px 20px 20px 4px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-    border: 1px solid #f0f0f0;
-    align-self: flex-start;
-}
-.message.user {
-    background: #E31837;
-    color: white;
-    border-radius: 20px 20px 4px 20px;
-    box-shadow: 0 3px 12px rgba(227,24,55,0.2);
-    align-self: flex-end;
-    margin-left: auto;
-}
-.input-area {
-    display: flex;
-    gap: 0.5rem;
-    max-width: 800px;
-    margin: 0.5rem auto;
-}
-.input-area input {
-    flex: 1;
-    border: 2px solid #e0e0e0;
-    border-radius: 24px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.93rem;
-    outline: none;
-    transition: border-color 0.25s ease;
-}
-.input-area input:focus {
-    border-color: #E31837;
-    box-shadow: 0 0 0 3px rgba(227,24,55,0.15);
-}
-.input-area button {
-    background: #E31837;
-    color: white;
-    border: none;
-    border-radius: 24px;
-    padding: 0.6rem 1.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-.input-area button:hover {
-    background: #c41230;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(227,24,55,0.3);
-}
-
-/* ── Radio ── */
-.radio-controls {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    max-width: 500px;
-    margin: 0.5rem auto;
-    flex-wrap: wrap;
-}
-.radio-controls select {
-    flex: 1;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-    outline: none;
-    background: white;
-    transition: border-color 0.25s ease;
-}
-.radio-controls select:focus {
-    border-color: #E31837;
-}
-.radio-controls button {
-    background: #E31837;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 0.5rem 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-}
-.radio-controls button:hover {
-    background: #c41230;
-    transform: translateY(-1px);
 }

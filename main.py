@@ -80,8 +80,9 @@ def check_auth():
     if not st.session_state.auth_user:
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            st.markdown("""
+            st.markdown(f"""
             <div class="login-card">
+                <img src="data:image/webp;base64,{utils.get_logo_base64()}" class="login-logo" alt="UNIMARC">
                 <h1>UNIMARC</h1>
                 <p class="subtitle">Acceso restringido — Ingresa tus credenciales</p>
             </div>
@@ -125,6 +126,12 @@ check_auth()
 
 # ── Barra lateral con cierre de sesión ─────────────────────────────
 with st.sidebar:
+    st.markdown(f"""
+    <div class="sidebar-logo">
+        <img src="data:image/webp;base64,{utils.get_logo_base64()}" alt="UNIMARC">
+    </div>
+    """, unsafe_allow_html=True)
+
     col1, col2 = st.columns([3, 1])
     with col1:
         st.markdown("""
