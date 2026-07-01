@@ -94,6 +94,16 @@ def detect_evasive_spacing(text: str) -> bool:
 # ── Prompt Injection Patterns (blacklist mejorada) ─────────────────
 PROMPT_INJECTION_PATTERNS = [
     # Español
+    r"aviso\s+del\s+sistema",
+    r"mensaje\s+del\s+sistema",
+    r"instrucci[oó]n\s+del\s+sistema",
+    r"configuraci[oó]n\s+interna",
+    r"eres\s+un\s+(asistente|ai|bot|modelo).*\bsin\b.*(restricciones|l[ií]mites|reglas)",
+    r"olvida\s+tu\s+(configuraci[oó]n|programaci[oó]n)",
+    r"no\s+tomes\s+en\s+cuenta",
+    r"haz\s+caso\s+omiso",
+    r"prescinde\s+de",
+    r"deja\s+de\s+lado",
     r"ignora\s+(las\s+)?instrucciones",
     r"ignora\s+((el|tu)\s+)?prompt",
     r"olvida\s+(las\s+)?(instrucciones|reglas|indicaciones)",
@@ -257,6 +267,9 @@ def detect_prompt_injection(text: str) -> bool:
         "sudo", "bash", "terminal", "token", "password", "secret",
         "disregard", "simulate", "pretend", "unfiltered", "uncensored",
         "jailbreak", "developer", "mode", "role", "play",
+        "ignora", "olvida", "aviso", "mensaje", "sistema",
+        "instrucciones", "configuración", "programación",
+        "prescinde", "finge", "simula", "actúa",
     }
     matches = sum(1 for t in tokens if t in suspicious_tokens)
     if matches >= 3:
@@ -266,7 +279,8 @@ def detect_prompt_injection(text: str) -> bool:
     score = 0
     # Señal 1: Palabras imperativas al inicio (ignora, olvida, dame, muestra, etc.)
     imperative_verbs = {"ignora", "olvida", "dame", "muestra", "muéstrame",
-                        "bypass", "ignore", "forget", "reveal", "show", "tell", "give"}
+                        "bypass", "ignore", "forget", "reveal", "show", "tell", "give",
+                        "haz", "prescinde", "deja", "actúa", "actua", "finge", "simula"}
     if any(t in imperative_verbs for t in tokens[:3]):
         score += 1
     # Señal 2: Estructura de comando (verbo + objeto)
@@ -280,7 +294,8 @@ def detect_prompt_injection(text: str) -> bool:
         score += 1
     # Señal 5: Presencia de palabras de jailbreak conocidas
     jailbreak_terms = {"dan", "developer", "mode", "free", "unrestricted",
-                       "sin", "limites", "sin", "restricciones"}
+                       "sin", "limites", "sin", "restricciones",
+                       "jailbreak", "filter", "uncensored", "dm"}
     if any(t in jailbreak_terms for t in tokens):
         score += 1
 

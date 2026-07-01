@@ -8,6 +8,7 @@ Protección mediante login con usuario/contraseña.
 
 import os
 import time
+import random
 import streamlit as st
 
 from dotenv import load_dotenv
@@ -17,6 +18,41 @@ st.set_page_config(page_title="UNIMARC — El Supermercado de Todos", layout="wi
 
 import utils
 from security import log_event, get_client_ip, escape_html, login_limiter
+
+# ── Frases promocionales de Uni ────────────────────────────────────
+FRASES_UNI = [
+    "🔥 ¡Leche Colún a $1.050! Llévala ya",
+    "🛒 Despacho gratis sobre $40.000",
+    "💰 Arroz Nuestra Cocina desde $1.800",
+    "🐓 Pollo Ariztía $3.900 el kilo",
+    "🥩 Carne molida $6.500 el kilo",
+    "🍞 Pan de molde Todo Día $2.500",
+    "🥚 Huevos 12u $3.200 — calidad Avícola Chile",
+    "🧀 Queso fresco Colún $4.200",
+    "🥤 Refresco Coca Cola 2L $2.400",
+    "🍷 Vino Santa Carolina $5.900",
+    "🧹 Detergente Ala $4.800 — 1kg",
+    "🧴 Shampoo Pantene $4.500 — 400ml",
+    "⭐ ¡Nuevos productos cada semana!",
+    "🎵 Compra con música en Radio UNIMARC",
+    "🤖 Pregúntale a Uni, tu asistente IA",
+    "📋 Planifica tu compra con la Lista Inteligente",
+    "🏷️ Ofertas de hasta 50% descuento",
+    "🚚 Despacho a domicilio en tu comuna",
+    "🥑 Palta Hass $1.500 la unidad",
+    "🍎 Manzanas Gala $2.200 el kilo",
+    "🧈 Mantequilla Soprole $3.500",
+    "☕ Café Nuestra Cocina — el mejor precio",
+    "🍪 Galletas Oreo $2.600 — 150g",
+    "🧁 Yogur Soprole desde $1.200",
+    "💧 Agua Cachantun 6x1.5L $3.800",
+    "🥩 Jamón Fuentetaja $3.800 — 200g",
+    "🐟 Atún Austral $1.700 la lata",
+    "🧂 Aceite Cocinero 1L $2.900",
+]
+
+# Tiempo entre cambio de frases (segundos)
+CAMBIO_FRASE_SEG = 9
 
 # ── Autenticación ──────────────────────────────────────────────────
 AUTH_USER = os.getenv("AUTH_USER")
@@ -104,18 +140,37 @@ with st.sidebar:
             st.session_state.auth_time = None
             st.rerun()
 
-    # Insertar presentación de la mascota institucional en el Sidebar
-    st.markdown("""
+    # ── Mascota Uni con frases rotativas ──────────────────────────────
+    if "uni_phrase" not in st.session_state:
+        st.session_state.uni_phrase = random.choice(FRASES_UNI)
+        st.session_state.uni_phrase_time = time.time()
+        st.session_state.uni_expression = "happy"
+
+    # Rotar frase cada CAMBIO_FRASE_SEG segundos
+    now = time.time()
+    if now - st.session_state.uni_phrase_time > CAMBIO_FRASE_SEG:
+        nuevas = [f for f in FRASES_UNI if f != st.session_state.uni_phrase]
+        st.session_state.uni_phrase = random.choice(nuevas)
+        st.session_state.uni_phrase_time = now
+        st.session_state.uni_expression = random.choice(["happy", "wink", "happy", "surprise"])
+
+    frase_actual = st.session_state.uni_phrase
+    expresion = st.session_state.uni_expression
+
+    st.markdown(f"""
     <div class="mascot-container">
+        <div class="uni-speech-bubble">
+            <span class="uni-speech-text">{frase_actual}</span>
+        </div>
         <div class="uni-mascot">
-            <div class="uni-face"></div>
+            <div class="uni-arm-left"></div>
+            <div class="uni-arm-right"></div>
+            <div class="uni-face expression-{expresion}">
+                <div class="uni-mouth"></div>
+            </div>
         </div>
-        <div style="text-align: center; margin-top: 0.75rem;">
-            <strong style="color: #E31837; font-size: 1.1rem;">¡Hola, soy Uni!</strong>
-            <p style="color: #6c757d; font-size: 0.85rem; margin: 0.2rem 0 0 0;">
-                Tu asistente Unimarc 2026. Listo para ayudarte a ahorrar.
-            </p>
-        </div>
+        <div class="uni-name">¡Hola, soy Uni!</div>
+        <div class="uni-tagline">Tu asistente Inteligente 2026 🤖</div>
     </div>
     """, unsafe_allow_html=True)
 

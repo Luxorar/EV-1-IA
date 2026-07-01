@@ -45,6 +45,47 @@
     0%, 95%, 100% { transform: scaleY(1); }
     97% { transform: scaleY(0.1); }
 }
+@keyframes talkMascot {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-3deg); }
+    75% { transform: translateY(-2px) rotate(3deg); }
+}
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    75% { transform: rotate(6deg); }
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 6px 12px rgba(227, 24, 55, 0.3); }
+    50% { box-shadow: 0 6px 25px rgba(227, 24, 55, 0.6), 0 0 40px rgba(227, 24, 55, 0.2); }
+}
+@keyframes bounceHappy {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-20px) scale(1.1); }
+    50% { transform: translateY(-5px) scale(1.05); }
+    70% { transform: translateY(-12px); }
+}
+@keyframes floatBubble {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-5px); opacity: 0.95; }
+}
+@keyframes fadeInOut {
+    0%, 100% { opacity: 1; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.6; }
+}
+@keyframes eyeHappy {
+    0%, 100% { border-radius: 4px; height: 12px; }
+    50% { border-radius: 50%; height: 14px; width: 10px; }
+}
+@keyframes eyeWink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+@keyframes eyeSurprise {
+    0%, 100% { width: 8px; height: 12px; border-radius: 4px; }
+    50% { width: 12px; height: 14px; border-radius: 50%; background: #00ffcc; }
+}
 
 /* ── Base ── */
 .stApp {
@@ -736,7 +777,7 @@ div[data-testid="stChatInput"] button:hover {
     .offer-card { padding: 1.2rem; }
 }
 
-/* --- El Personaje: "Uni" (Mascota Digital 2026) --- */
+/* --- El Personaje: "Uni" (Mascota Digital 2026 v2 — Animada) --- */
 .mascot-container {
     display: flex;
     flex-direction: column;
@@ -744,40 +785,103 @@ div[data-testid="stChatInput"] button:hover {
     background: linear-gradient(135deg, #ffffff 0%, #fff5f6 100%);
     border: 2px solid var(--rojo-unimarc);
     border-radius: 20px;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
     margin: 1rem 0;
     box-shadow: 0 8px 16px rgba(0,0,0,0.04);
     animation: fadeIn 0.6s ease-out;
+    position: relative;
 }
 
+/* ── Burbuja de diálogo ── */
+.uni-speech-bubble {
+    background: white;
+    border: 2px solid var(--rojo-unimarc);
+    border-radius: 16px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+    max-width: 200px;
+    animation: floatBubble 3s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(227, 24, 55, 0.1);
+    z-index: 2;
+}
+.uni-speech-bubble .uni-speech-text {
+    font-size: 0.78rem;
+    color: var(--texto-oscuro);
+    line-height: 1.35;
+    display: block;
+    text-align: center;
+    font-weight: 500;
+}
+.uni-speech-bubble .uni-speech-icon {
+    font-size: 0.9rem;
+    display: inline;
+}
+/* Colita de la burbuja (triángulo invertido) */
+.uni-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+    filter: drop-shadow(0 2px 2px rgba(227, 24, 55, 0.08));
+    z-index: 3;
+}
+/* Borde del triángulo */
+.uni-speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--rojo-unimarc);
+    z-index: 1;
+}
+
+/* ── Cuerpo de Uni ── */
 .uni-mascot {
-    width: 70px;
-    height: 70px;
-    background: var(--rojo-unimarc);
-    border-radius: 18px;
+    width: 75px;
+    height: 75px;
+    background: linear-gradient(145deg, var(--rojo-unimarc), #c41230);
+    border-radius: 20px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 6px 12px rgba(227, 24, 55, 0.3);
-    animation: floatMascot 3s ease-in-out infinite;
+    animation: floatMascot 3s ease-in-out infinite, glowPulse 4s ease-in-out infinite;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.uni-mascot:hover {
+    animation: bounceHappy 0.6s ease, glowPulse 2s ease-in-out infinite;
 }
 
 /* Pantalla LED del rostro de Uni */
 .uni-face {
-    width: 52px;
-    height: 42px;
+    width: 55px;
+    height: 45px;
     background: #1a1a1a;
-    border-radius: 10px;
+    border-radius: 12px;
     position: relative;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 0 8px;
     box-sizing: border-box;
+    border: 1px solid #333;
 }
 
-/* Ojos LED digitales */
+/* Ojos LED digitales — expresión normal (parpadear) */
 .uni-face::before, .uni-face::after {
     content: '';
     width: 8px;
@@ -785,18 +889,101 @@ div[data-testid="stChatInput"] button:hover {
     background: #00ffcc;
     border-radius: 4px;
     animation: blinkEyes 4s infinite;
+    box-shadow: 0 0 6px rgba(0, 255, 204, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Boca LED (sonrisa digital) */
+.uni-face .uni-mouth {
+    position: absolute;
+    bottom: 7px;
+    width: 20px;
+    height: 4px;
+    background: #00ffcc;
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(0, 255, 204, 0.3);
+    animation: blinkEyes 5s infinite;
 }
 
 /* Rueditas del carrito */
 .uni-mascot::after {
     content: '';
     position: absolute;
-    bottom: -8px;
-    width: 50px;
+    bottom: -9px;
+    width: 55px;
     height: 10px;
-    background: radial-gradient(circle, #333 40%, transparent 50%);
-    background-size: 15px 10px;
+    background: radial-gradient(circle, #555 35%, transparent 40%);
+    background-size: 16px 10px;
     background-repeat: space;
+}
+
+/* ── Brazos animados ── */
+.uni-arm-left, .uni-arm-right {
+    position: absolute;
+    width: 18px;
+    height: 32px;
+    background: var(--rojo-unimarc);
+    border-radius: 9px;
+    top: 20px;
+    z-index: -1;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+.uni-arm-left {
+    left: -10px;
+    transform: rotate(15deg);
+    transform-origin: top center;
+    animation: wiggle 2.5s ease-in-out infinite;
+}
+.uni-arm-right {
+    right: -10px;
+    transform: rotate(-15deg);
+    transform-origin: top center;
+    animation: wiggle 2.5s ease-in-out infinite 0.5s;
+}
+
+/* ── Nombre y tagline ── */
+.uni-name {
+    color: var(--rojo-unimarc);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-top: 0.5rem;
+    letter-spacing: -0.3px;
+}
+.uni-tagline {
+    color: #6c757d;
+    font-size: 0.78rem;
+    margin: 0.1rem 0 0 0;
+    text-align: center;
+}
+
+/* ── Expresiones mediante clases ── */
+/* Feliz: ojos en arco */
+.uni-face.expression-happy::before,
+.uni-face.expression-happy::after {
+    border-radius: 50% 50% 4px 4px;
+    height: 8px;
+    width: 10px;
+    animation: eyeHappy 3s ease-in-out infinite;
+}
+/* Guiño: ojo derecho se cierra */
+.uni-face.expression-wink::before {
+    animation: blinkEyes 4s infinite;
+}
+.uni-face.expression-wink::after {
+    animation: eyeWink 6s infinite;
+}
+/* Sorpresa: ojos grandes redondos */
+.uni-face.expression-surprise::before,
+.uni-face.expression-surprise::after {
+    animation: eyeSurprise 2s ease-in-out infinite;
+}
+/* Hablando: vibración + ojos parpadeo rápido */
+.mascot-container.talking .uni-mascot {
+    animation: talkMascot 0.4s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
+}
+.mascot-container.talking .uni-face::before,
+.mascot-container.talking .uni-face::after {
+    animation: blinkEyes 1.5s infinite;
 }
 
 /* --- Estilo de Burbujas del Chat mejoradas --- */

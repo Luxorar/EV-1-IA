@@ -10,8 +10,6 @@ import streamlit as st
 import utils
 from security import escape_html
 
-utils.inject_css()
-
 st.markdown("## Planifica tu compra")
 st.markdown("Busca productos, agrégalos con cantidad y calcula tu total.")
 
@@ -85,9 +83,20 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    if st.button("Limpiar lista", type="secondary"):
-        st.session_state.lista = []
-        st.rerun()
+    col_clear, col_clear2 = st.columns([1, 3])
+    with col_clear:
+        if st.button("Limpiar lista", type="secondary", use_container_width=True):
+            st.session_state.confirmar_limpiar = True
+    if st.session_state.get("confirmar_limpiar"):
+        with col_clear2:
+            st.warning("¿Seguro que quieres borrar toda la lista?")
+            if st.button("Sí, borrar todo", type="primary", use_container_width=True):
+                st.session_state.lista = []
+                st.session_state.confirmar_limpiar = False
+                st.rerun()
+            if st.button("Cancelar", use_container_width=True):
+                st.session_state.confirmar_limpiar = False
+                st.rerun()
 
 st.markdown("""
 <div class="club-banner">

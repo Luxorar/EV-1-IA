@@ -19,6 +19,10 @@ load_dotenv()
 
 from chat_engine import consultar as rag_consultar
 from security import sanitize_input as security_sanitize, log_event
+from openai import (
+    BadRequestError, RateLimitError,
+    APITimeoutError, APIConnectionError, AuthenticationError,
+)
 
 app = Flask(__name__)
 
@@ -138,6 +142,18 @@ def chat():
     try:
         respuesta_completa = "".join(list(rag_consultar(query, session_id=session_id)))
         return jsonify({"response": respuesta_completa})
+    except BadRequestError:
+        log_event("FLASK_LLM_BAD_REQUEST", detail=f"IP={ip}", level="warning")
+        return jsonify({"response": "Tu pregunta activó los filtros de seguridad. Reformúlala."}), 400
+    except RateLimitError:
+        log_event("FLASK_LLM_RATE_LIMIT", detail=f"IP={ip}", level="warning")
+        return jsonify({"response": "Servicio de IA saturado. Espera unos segundos."}), 429
+    except (APITimeoutError, APIConnectionError):
+        log_event("FLASK_LLM_UNAVAILABLE", detail=f"IP={ip}", level="error")
+        return jsonify({"response": "Servicio de IA no disponible. Intenta más tarde."}), 503
+    except AuthenticationError:
+        log_event("FLASK_LLM_AUTH_ERROR", detail=f"IP={ip}", level="error")
+        return jsonify({"response": "Error de configuración del servicio de IA."}), 500
     except Exception:
         log_event("FLASK_CHAT_ERROR", detail=f"IP={ip}", level="error")
         return jsonify({"response": "Error interno al procesar la consulta."}), 500

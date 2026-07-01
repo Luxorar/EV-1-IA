@@ -9,8 +9,6 @@ import streamlit as st
 import utils
 from security import escape_html
 
-utils.inject_css()
-
 st.markdown("""
 <div class="hero">
     <h1>UNIMARC</h1>
@@ -19,7 +17,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 productos = utils.get_productos()
-ofertas = utils.get_ofertas(productos, n=6)
+if "ofertas_home" not in st.session_state:
+    st.session_state.ofertas_home = utils.get_ofertas(productos, n=6)
+ofertas = st.session_state.ofertas_home
 
 st.markdown("## Ofertas destacadas")
 st.markdown('<div class="offer-grid">', unsafe_allow_html=True)
@@ -47,14 +47,18 @@ cats = {}
 for p in productos:
     cats.setdefault(p["categoria"], []).append(p)
 
-st.markdown('<div class="cat-grid">', unsafe_allow_html=True)
-for cat, items in sorted(cats.items()):
-    st.markdown(f"""
-    <div class="cat-card">
-        <div class="cat-name">{cat}</div>
-        <div class="cat-count">{len(items)} productos</div>
-    </div>
-    """, unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+iconos = {
+    "Lácteos": "🥛", "Panadería y Cereales": "🍞", "Cárnicos y Huevos": "🥩",
+    "Frutas y Verduras": "🥦", "Abarrotes": "🥫", "Bebidas": "🥤",
+    "Limpieza y Cuidado": "🧹",
+}
+
+cols = st.columns(3)
+for i, (cat, items) in enumerate(sorted(cats.items())):
+    with cols[i % 3]:
+        ico = iconos.get(cat, "📦")
+        if st.button(f"{ico}\n\n**{cat}**\n\n{len(items)} productos", key=f"cat_{cat}", use_container_width=True):
+            st.session_state.cat_filter = cat
+            st.switch_page("pages/01_Productos.py")
 
 st.page_link("pages/01_Productos.py", label="Ver todos los productos", icon="🛒")

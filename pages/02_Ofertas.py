@@ -9,12 +9,12 @@ import streamlit as st
 import utils
 from security import escape_html
 
-utils.inject_css()
-
 st.markdown("## Ofertas y promociones")
 
 productos = utils.get_productos()
-ofertas = utils.get_ofertas(productos, n=15)
+if "ofertas_page" not in st.session_state:
+    st.session_state.ofertas_page = utils.get_ofertas(productos, n=15)
+ofertas = st.session_state.ofertas_page
 
 st.markdown('<div class="offer-grid">', unsafe_allow_html=True)
 for of in ofertas:

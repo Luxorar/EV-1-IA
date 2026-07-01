@@ -1,9 +1,6 @@
 import streamlit as st
-import utils
 from security import escape_html
 from chat_engine import consultar
-
-utils.inject_css()
 
 
 def user_msg_html(content):
@@ -55,6 +52,27 @@ if prompt := st.chat_input("Ej: ¿Dónde encuentro arroz?"):
 
     try:
         response_container = st.empty()
+        response_container.markdown("""
+        <div class="chat-msg-bot">
+            <div class="bot-avatar-container">
+                <div class="uni-mascot" style="width:36px;height:36px;border-radius:10px;box-shadow:none;animation:talkMascot 0.4s ease-in-out infinite,glowPulse 2s ease-in-out infinite;">
+                    <div class="uni-arm-left" style="width:12px;height:22px;top:10px;left:-8px;"></div>
+                    <div class="uni-arm-right" style="width:12px;height:22px;top:10px;right:-8px;"></div>
+                    <div class="uni-face" style="width:26px;height:22px;border-radius:6px;padding:0 4px;">
+                    </div>
+                </div>
+            </div>
+            <div class="chat-bubble" style="background:#f0f0f0;border:none;color:#888;">
+                <span class="typing-dots">Uni está pensando<span>.</span><span>.</span><span>.</span></span>
+            </div>
+        </div>
+        <style>
+        @keyframes dotPulse { 0%,20% { opacity:0; } 50% { opacity:1; } 80%,100% { opacity:0; } }
+        .typing-dots span { animation: dotPulse 1.4s infinite; font-size:1.5rem; line-height:0; }
+        .typing-dots span:nth-child(2) { animation-delay:0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay:0.4s; }
+        </style>
+        """, unsafe_allow_html=True)
         full_response = ""
         for chunk in consultar(prompt):
             full_response += chunk
@@ -65,5 +83,5 @@ if prompt := st.chat_input("Ej: ¿Dónde encuentro arroz?"):
             bot_msg_html(full_response), unsafe_allow_html=True
         )
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-    except Exception as e:
-        st.error(f"Error al conectar con el asistente. Revisa la configuración del servidor.")
+    except Exception:
+        st.error("Error inesperado al conectar con el asistente. Revisa la terminal para más detalles.")
